@@ -13,7 +13,7 @@ def hello():
 # Handle messages from client
 @socketio.on('yeetmessage')
 def handle_message(message):
-    print(f'received message: {message}')
+    return message
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, host= '0.0.0.0')
