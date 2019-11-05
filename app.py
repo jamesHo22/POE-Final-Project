@@ -15,13 +15,14 @@ def hello():
     return render_template('main.html', result = data)
 
 # Handle messages from client
-@socketio.on('yeetmessage')
+@socketio.on('clientToServ')
 def handle_message(message):
     print(f"YEET: {message}")
     global count
     global data
     count += 1
     data = message, count
+    socketio.emit('clientToServ', f'{data}')
     print(data)
     
 def incrementCounter(mCount):

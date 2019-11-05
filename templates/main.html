@@ -8,13 +8,30 @@
         });
 
         function myFunction() {
-        //   document.getElementById('messageView').innerHTML = "Hello World";
-          socket.emit('yeetmessage', {data: 'Button Pressed!'});
+            socket.emit('clientToServ', {data: 'Button Pressed!'});
+            // This updates the 
+            var newData = getData()
+            
+            
+        }
+
+        socket.on('clientToServ', function (data) {
+                console.log('penis: ' + data);
+                newData = data;
+                document.getElementById('messageView').innerHTML = newData;
+            });
+
+        function getData() {
+            // This gets newest data from the server the data from 
+            var newData = 'Nothing Yet'
+            
+            return newData
         }
     </script>
 
 
 <!-- -------------------- HTML --------------------- -->
+    <meta id="my-data" data-result="{{result}}">
     <h1>
         Test
         <p id = 'messageView'>
