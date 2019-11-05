@@ -1,7 +1,26 @@
-<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-<script type="text/javascript" charset="utf-8">
-    var socket = io();
-    socket.on('connect', function() {
-        socket.emit('message', {data: 'I\'m connected!'});
-    });
-</script>
+<!DOCTYPE html>
+<html>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+        var socket = io();
+        socket.on('yeetmessage', function() {
+            socket.emit('init_connect', {data: 'I\'m connected!'});
+        });
+
+        function myFunction() {
+        //   document.getElementById('messageView').innerHTML = "Hello World";
+          socket.emit('yeetmessage', {data: 'Button Pressed!'});
+        }
+    </script>
+
+
+<!-- -------------------- HTML --------------------- -->
+    <h1>
+        Test
+        <p id = 'messageView'>
+            {{result}}
+        </p>
+        
+    </h1>
+    <button onclick="myFunction()">Click me</button>
+</html>

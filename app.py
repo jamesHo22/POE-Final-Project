@@ -5,15 +5,27 @@ from flask_socketio import SocketIO
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
+count = 0
+messageVar = 'no message'
+data = messageVar, count
+print('Variables Instantiated')
 
 @app.route('/')
 def hello():
-    return render_template('main.html')
+    return render_template('main.html', result = data)
 
 # Handle messages from client
 @socketio.on('yeetmessage')
 def handle_message(message):
-    return message
+    print(f"YEET: {message}")
+    global count
+    global data
+    count += 1
+    data = message, count
+    print(data)
+    
+def incrementCounter(mCount):
+    count = mCount + 1
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, host= '0.0.0.0')
