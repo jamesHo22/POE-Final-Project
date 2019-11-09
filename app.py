@@ -1,4 +1,4 @@
-# Tutorial from https://flask-socketio.readthedocs.io/en/latest/
+# Tutorial from https://codeburst.io/building-your-first-chat-application-using-flask-in-7-minutes-f98de4adfa5d
 from flask import Flask, render_template
 from flask import request
 from flask_socketio import SocketIO
