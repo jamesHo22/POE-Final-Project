@@ -3,42 +3,37 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8">
-        var socket = io();
-        socket.on('yeetmessage', function() {
-            socket.emit('init_connect', {data: 'I\'m connected!'});
+
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('connect', function() {
+            socket.emit('my event', {data: 'User connected!'});
+            // This is jQuery
+            var form = $('form').on('submit', function(e) {
+                console.log('Message sent')
+                e.preventDefault()
+                let user_name = $( 'input.username' ).val()
+                let user_input = $( 'input.message' ).val()
+                socket.emit( 'my event', {user_name : user_name, message : user_input});
+                $( 'input.message' ).val( '' ).focus()
+            
+            }) 
         });
 
-        function myFunction() {
-            socket.emit('clientToServ', {data: 'Button Pressed!'});
-            // This updates the 
-            var newData = getData()
-        }
-
-        socket.on('clientToServ', function (data) {
-                console.log('penis: ' + data);
-                newData = data;
-                document.getElementById('messageView').innerHTML = newData;
-            });
-
-        function getData() {
-            // This gets newest data from the server the data from 
-            var newData = 'Nothing Yet'
-            
-            return newData
-        }
+        socket.on( 'my response', function( msg ) {
+            console.log( msg )
+            if( typeof msg.user_name !== 'undefined' ) {
+                $( 'h3' ).remove()
+                $( 'div.message_holder' ).append( '<div><b style="color: #000">'+msg.user_name+'</b> '+msg.message+'</div>' )
+            }
+        })
+        
     </script>
 
 
 <!-- -------------------- HTML --------------------- -->
-    <meta id="my-data" data-result="{{result}}">
-    <h1>
-        Test
-        <p id = 'messageView'>
-            {{result}}
-        </p>
-        
-    </h1>
-    <button onclick="myFunction()">Click me</button>
+    <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
+    <div class="message_holder"></div>
 
     <form action="" method="POST">
         <input type="text" class="username" placeholder="User Name"/>
