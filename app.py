@@ -8,7 +8,6 @@ socketio = SocketIO(app)
 count = 0
 messageVar = 'no message'
 data = messageVar, count
-print('Variables Instantiated')
 
 @app.route('/')
 def hello():
@@ -24,6 +23,15 @@ def handle_message(message):
     data = message, count
     socketio.emit('clientToServ', f'{data}')
     print(data)
+
+# From tutorial
+def messageReceived(methods=['GET', 'POST']):
+    print('message was received!!!')
+
+@socketio.on('my event')
+def handle_my_custom_event(json, methods=['GET', 'POST']):
+    print('received my event: ' + str(json))
+    socketio.emit('my response', json, callback=messageReceived)
     
 def incrementCounter(mCount):
     count = mCount + 1
