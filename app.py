@@ -2,10 +2,14 @@
 from flask import Flask, render_template
 from flask import request
 from flask_socketio import SocketIO
+import plotly.graph_objects as go
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
+
+# fig = go.Figure(data=go.Bar(y=[2, 3, 1]))
+# fig.write_html('first_figure.html', auto_open=True)
 
 @app.route('/', methods=['GET', 'POST'])
 def hello():
