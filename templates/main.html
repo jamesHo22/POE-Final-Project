@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
+    <!-- <script src="plotly-latest.min.js"></script> -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8">
-
-        let socket = io.connect('https://' + document.domain + ':' + location.port);
-        console.log('https://' + document.domain + ':' + location.port)
+        
+        let socket = io.connect('http://' + document.domain + ':' + location.port);
+        // let socket = io.connect('https://' + document.domain + ':' + location.port);
+        // console.log('https://' + document.domain + ':' + location.port)
         socket.on('connect', function() {
             socket.emit('my event', {data: 'User connected!'});
             // This is jQuery
@@ -33,6 +36,7 @@
         
     </script>
 
+   
 
 <!-- -------------------- HTML --------------------- -->
     <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
@@ -44,7 +48,39 @@
         <input type="submit"/>
     </form>
 
-    <div class="chart" id="bargraph">
+    <div id="tester" style="width:600px;height:250px;"></div>
+    <script>
+        // plotting
+        function getData() {
+            return Math.random();
+        }
+        // get document ID and plot random data point
+        TESTER = document.getElementById('tester');
+        Plotly.plot(TESTER,[{
+            y:[getData()],
+            type:'line'
+        }]);
 
-    </div>
+        setInterval(function() {
+            Plotly.extendTraces(TESTER, { y: [[getData()]] }, [0])
+        }, 200);
+
+        var cnt = 0;
+
+        setInterval(function(){
+            Plotly.extendTraces(TESTER,{ y:[[getData()]]}, [0]);
+            cnt++;
+            
+            if(cnt > 500) {
+                // code for chart 'sliding' here
+                Plotly.relayout(TESTER,{
+                    xaxis: {
+                        range: [cnt-500,cnt]
+                    }
+                });
+            }
+
+        }, 15);
+
+    </script>
 </html>
