@@ -4,38 +4,7 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
-        
-        // let socket = io.connect('http://' + document.domain + ':' + location.port);
-        let socket = io.connect('https://' + document.domain + ':' + location.port);
-        console.log('https://' + document.domain + ':' + location.port)
-        socket.on('connect', function() {
-            socket.emit('my event', {data: 'User connected!'});
-            // This is jQuery
-            var form = $('form').on('submit', function(e) {
-                console.log('Message sent')
-                e.preventDefault()
-                let user_name = $( 'input.username' ).val()
-                let user_input = $( 'input.message' ).val()
-                socket.emit( 'my event', {user_name : user_name, message : user_input});
-                $( 'input.message' ).val( '' ).focus()
-            
-            }) 
-        });
-
-        socket.on( 'my response', function( msg ) {
-            console.log( msg )
-            $( 'h3' ).remove()
-            $( 'div.message_holder' ).append( '<div>'+msg+'</div>' )
-            
-            if( typeof msg.user_name !== 'undefined' ) {
-                $( 'h3' ).remove()
-                $( 'div.message_holder' ).append( '<div><b style="color: #000">'+msg.user_name+'</b> '+msg.message+'</div>' )
-            }
-        })
-        
-    </script>
-
+    
    
 
 <!-- -------------------- HTML --------------------- -->
@@ -48,39 +17,22 @@
         <input type="submit"/>
     </form>
 
-    <div id="tester" style="width:1000px;height:600px;"></div>
-    <script>
-        // plotting
-        function getData() {
-            return Math.random();
-        }
-        // get document ID and plot random data point
-        TESTER = document.getElementById('tester');
-        Plotly.plot(TESTER,[{
-            y:[getData()],
-            type:'line'
-        }]);
+    <div id="all_plots">
+        <div id="X_acceleration" style="width:1000px;height:300px;"></div>
+        <br>
+        <div id="Y_acceleration" style="width:1000px;height:300px;"></div>
+        <br>
+        <div id="Z_acceleration" style="width:1000px;height:300px;"></div>
+        <br>
+    
+        <div id="X_rot" style="width:1000px;height:300px;"></div>
+        <br>
+        <div id="Y_rot" style="width:1000px;height:300px;"></div>
+        <br>
+        <div id="Z_rot" style="width:1000px;height:300px;"></div>
+        <br>
+    </div>
+    
 
-        setInterval(function() {
-            Plotly.extendTraces(TESTER, { y: [[getData()]] }, [0])
-        }, 200);
-
-        var cnt = 0;
-
-        setInterval(function(){
-            Plotly.extendTraces(TESTER,{ y:[[getData()]]}, [0]);
-            cnt++;
-            
-            if(cnt > 500) {
-                // code for chart 'sliding' here
-                Plotly.relayout(TESTER,{
-                    xaxis: {
-                        range: [cnt-500,cnt]
-                    }
-                });
-            }
-
-        }, 15);
-
-    </script>
+    <script type=text/javascript src="{{url_for('static', filename='js/main.js')}}"></script>
 </html>
