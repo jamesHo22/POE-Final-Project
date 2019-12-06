@@ -1,5 +1,5 @@
-// let socket = io.connect('http://' + document.domain + ':' + location.port);
-let socket = io.connect('https://' + document.domain + ':' + location.port);
+let socket = io.connect('http://' + document.domain + ':' + location.port);
+// let socket = io.connect('https://' + document.domain + ':' + location.port);
 console.log('https://' + document.domain + ':' + location.port)
 socket.on('connect', function() {
     socket.emit('my event', {data: 'User connected!'});
@@ -17,7 +17,6 @@ socket.on('connect', function() {
 
 socket.on( 'my response', function( msg ) {
     console.log( msg )
-    $( 'h3' ).remove()
     $( 'div.message_holder' ).append( '<div>'+msg+'</div>' )
     
     if( typeof msg.user_name !== 'undefined' ) {
@@ -35,12 +34,21 @@ function getData() {
 }
 
 function setUpAllPlots() {
+    /**
+     * initalizes all the plots on the page and returns 
+     * a dictionary of graph Elements
+     * @returns {Object} a map of each plotElement so that plotly can append data to them
+     */
+    let plotElement = {}
+    let cart = [];
     $.each($('#all_plots div'), function(index){
-        let elementId = $(this).attr('id')
-        let plotName = $(this).attr('title')
-        initPlot(elementId, plotName);
-        console.log("yeet")
-    })
+        let elementId = $(this).attr('id');
+        let plotName = $(this).attr('title');
+        plotElement[elementId] = initPlot(elementId, plotName);
+        cart.push(plotElement);
+    });
+    console.log(plotElement);
+    return plotElement;
 }
 
 function initPlot(elementId, plotName) {
@@ -54,7 +62,7 @@ function initPlot(elementId, plotName) {
     var layout = {
         title: plotName,
         xaxis: {
-          title: "x Axis",
+          title: "Time (s)",
           titlefont: {
             family: "Courier New, monospace",
             size: 18,
@@ -62,7 +70,7 @@ function initPlot(elementId, plotName) {
           }
         },
         yaxis: {
-          title: "y Axis",
+          title: "Value",
           titlefont: {
             family: "Courier New, monospace",
             size: 18,
@@ -73,29 +81,67 @@ function initPlot(elementId, plotName) {
     // This plots one data point
     plotElement = document.getElementById(elementId);
     Plotly.plot(plotElement,[{
-        y:[0, 5, 5, 5],
+        y:[0, 7, 5, 6],
         type:'line',
     }], layout);
     return plotElement
 }
-setUpAllPlots();
+// Initialize the empty plots
+let plotElements = setUpAllPlots();
+
 // setInterval(function() {
-//     Plotly.extendTraces(TESTER, { y: [[getData()]] }, [0])
+//     Plotly.extendTraces(plotElements['X_acceleration'], { y: [[getData()]] }, [0])
 // }, 200);
 
-// var cnt = 0;
+var cnt = 0;
 
-// setInterval(function(){
-//     Plotly.extendTraces(TESTER,{ y:[[getData()]]}, [0]);
-//     cnt++;
+setInterval(function(){
+    // This test function populates the plots with random data
+    // Acceleration
+    Plotly.extendTraces(plotElements['X_acceleration'],{ y:[[getData()]]}, [0]);
+    Plotly.extendTraces(plotElements['Y_acceleration'],{ y:[[getData()]]}, [0]);
+    Plotly.extendTraces(plotElements['Z_acceleration'],{ y:[[getData()]]}, [0]);
+    // Angular velocity
+    Plotly.extendTraces(plotElements['X_rot'],{ y:[[getData()]]}, [0]);
+    Plotly.extendTraces(plotElements['Y_rot'],{ y:[[getData()]]}, [0]);
+    Plotly.extendTraces(plotElements['Z_rot'],{ y:[[getData()]]}, [0]);
+    cnt++;
+
+    let window = 50
     
-//     if(cnt > 500) {
-//         // code for chart 'sliding' here
-//         Plotly.relayout(TESTER,{
-//             xaxis: {
-//                 range: [cnt-500,cnt]
-//             }
-//         });
-//     }
+    if(cnt > window) {
+        // code for chart 'sliding' here
+        Plotly.relayout(plotElements['X_acceleration'],{
+            xaxis: {
+                range: [cnt-window,cnt]
+            }
+        });
+        Plotly.relayout(plotElements['Y_acceleration'],{
+            xaxis: {
+                range: [cnt-window,cnt]
+            }
+        });
+        Plotly.relayout(plotElements['Z_acceleration'],{
+            xaxis: {
+                range: [cnt-window,cnt]
+            }
+        });
 
-// }, 15);
+        Plotly.relayout(plotElements['X_rot'],{
+            xaxis: {
+                range: [cnt-window,cnt]
+            }
+        });
+        Plotly.relayout(plotElements['Y_rot'],{
+            xaxis: {
+                range: [cnt-window,cnt]
+            }
+        });
+        Plotly.relayout(plotElements['Z_rot'],{
+            xaxis: {
+                range: [cnt-window,cnt]
+            }
+        });
+    }
+
+}, 15);

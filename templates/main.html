@@ -1,28 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html style = "margin-left: 96px; margin-top: 48px;">
     <!-- <script src="plotly-latest.min.js"></script> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
     
-   
-
 <!-- -------------------- HTML --------------------- -->
-    <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
-    <div class="message_holder"></div>
-
     <form action="" method="POST">
         <input type="text" class="username" placeholder="User Name"/>
         <input type="text" class="message" placeholder="Messages"/>
         <input type="submit"/>
     </form>
 
+    <h3 style='font-size: 30px;'>Raw Data</h3>
+    <div class="message_holder" style="height:240px;width:1000px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;"></div>
+
     <div id="all_plots">
-        <div id="X_acceleration" title = "X Acceleration vs Time" style="width:1000px;height:300px;"></div>
+        <div id="X_acceleration" title = "X Acceleration vs Time (m/s^2)" style="width:1000px;height:300px;"></div>
         <br>
-        <div id="Y_acceleration" title = "Y Acceleration vs Time" style="width:1000px;height:300px;"></div>
+        <div id="Y_acceleration" title = "Y Acceleration vs Time (m/s^2)" style="width:1000px;height:300px;"></div>
         <br>
-        <div id="Z_acceleration" title = "Z Acceleration vs Time" style="width:1000px;height:300px;"></div>
+        <div id="Z_acceleration" title = "Z Acceleration vs Time (m/s^2)" style="width:1000px;height:300px;"></div>
         <br>
     
         <div id="X_rot" title = "X gyro (rad/s)" style="width:1000px;height:300px;"></div>
@@ -32,7 +35,6 @@
         <div id="Z_rot" title = "Z gyro (rad/s)" style="width:1000px;height:300px;"></div>
         <br>
     </div>
-    
 
     <script type=text/javascript src="{{url_for('static', filename='js/main.js')}}"></script>
 </html>
