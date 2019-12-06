@@ -1,5 +1,5 @@
-let socket = io.connect('http://' + document.domain + ':' + location.port);
-// let socket = io.connect('https://' + document.domain + ':' + location.port);
+// let socket = io.connect('http://' + document.domain + ':' + location.port);
+let socket = io.connect('https://' + document.domain + ':' + location.port);
 console.log('https://' + document.domain + ':' + location.port)
 socket.on('connect', function() {
     socket.emit('my event', {data: 'User connected!'});
@@ -37,24 +37,45 @@ function getData() {
 function setUpAllPlots() {
     $.each($('#all_plots div'), function(index){
         let elementId = $(this).attr('id')
-        initPlot(elementId);
+        let plotName = $(this).attr('title')
+        initPlot(elementId, plotName);
         console.log("yeet")
     })
 }
 
-function initPlot(elementId) {
+function initPlot(elementId, plotName) {
     /**
      * This function takes in an element ID and instantiates a plot
      * TODO: call this function in a loop to instantiate the plots
      * @param {String} elementId the ID of the html element you want to plot in
      * @returns {Element} returns the element corresponding to the plot you specified
      */
+    // Layout options
+    var layout = {
+        title: plotName,
+        xaxis: {
+          title: "x Axis",
+          titlefont: {
+            family: "Courier New, monospace",
+            size: 18,
+            color: "#7f7f7f"
+          }
+        },
+        yaxis: {
+          title: "y Axis",
+          titlefont: {
+            family: "Courier New, monospace",
+            size: 18,
+            color: "#7f7f7f"
+          }
+        }
+      };
     // This plots one data point
     plotElement = document.getElementById(elementId);
     Plotly.plot(plotElement,[{
         y:[0, 5, 5, 5],
-        type:'line'
-    }]);
+        type:'line',
+    }], layout);
     return plotElement
 }
 setUpAllPlots();
