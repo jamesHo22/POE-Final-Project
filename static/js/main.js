@@ -17,7 +17,6 @@ socket.on('connect', function() {
 // get reference to all plots
 let plotElements = setUpAllPlots();
 var cnt = 0;
-let window = 50;
 socket.on( 'my response', function( msg ) {
     console.log( typeof msg )
     let dataArray = msg.split(',');
@@ -27,7 +26,7 @@ socket.on( 'my response', function( msg ) {
     // scroll graph
     Plotly.relayout(plotElements['X_acceleration'],{
         xaxis: {
-            range: [cnt-window,cnt]
+            range: [cnt-50,cnt]
         }
     });
 
@@ -121,39 +120,39 @@ function initPlot(elementId, plotName) {
 //     Plotly.extendTraces(plotElements['Z_rot'],{ y:[[getData()]]}, [0]);
 //     cnt++;
 
-//     // let window = 50
+//     // let 50 = 50
     
-//     if(cnt > window) {
+//     if(cnt > 50) {
 //         // code for chart 'sliding' here
 //         Plotly.relayout(plotElements['X_acceleration'],{
 //             xaxis: {
-//                 range: [cnt-window,cnt]
+//                 range: [cnt-50,cnt]
 //             }
 //         });
 //         Plotly.relayout(plotElements['Y_acceleration'],{
 //             xaxis: {
-//                 range: [cnt-window,cnt]
+//                 range: [cnt-50,cnt]
 //             }
 //         });
 //         Plotly.relayout(plotElements['Z_acceleration'],{
 //             xaxis: {
-//                 range: [cnt-window,cnt]
+//                 range: [cnt-50,cnt]
 //             }
 //         });
 
 //         Plotly.relayout(plotElements['X_rot'],{
 //             xaxis: {
-//                 range: [cnt-window,cnt]
+//                 range: [cnt-50,cnt]
 //             }
 //         });
 //         Plotly.relayout(plotElements['Y_rot'],{
 //             xaxis: {
-//                 range: [cnt-window,cnt]
+//                 range: [cnt-50,cnt]
 //             }
 //         });
 //         Plotly.relayout(plotElements['Z_rot'],{
 //             xaxis: {
-//                 range: [cnt-window,cnt]
+//                 range: [cnt-50,cnt]
 //             }
 //         });
 //     }
