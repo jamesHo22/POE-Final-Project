@@ -92,7 +92,7 @@ function initPlot(elementId, plotName) {
     return plotElement
 }
 // Initialize the empty plots
-let plotElements = setUpAllPlots();
+// let plotElements = setUpAllPlots();
 
 // setInterval(function() {
 //     Plotly.extendTraces(plotElements['X_acceleration'], { y: [[getData()]] }, [0])
