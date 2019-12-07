@@ -25,13 +25,13 @@ socket.on( 'my response', function( msg ) {
     X_accel = parseFloat(dataArray[1]);
     console.log(typeof X_accel)
     console.log(X_accel)
-    Plotly.extendTraces(plotElements['X_acceleration'],{ y:[[X_accel]]}, [0]);
+    Plotly.extendTraces(plotElements['X_acceleration'],{ y:[[0.5]]}, [0]);
     // scroll graph
-    Plotly.relayout(plotElements['X_acceleration'],{
-        xaxis: {
-            range: [cnt-50,cnt]
-        }
-    });
+    // Plotly.relayout(plotElements['X_acceleration'],{
+    //     xaxis: {
+    //         range: [cnt-50,cnt]
+    //     }
+    // });
 
     $( 'div.message_holder' ).append( '<div>'+msg+'</div>' )
     
