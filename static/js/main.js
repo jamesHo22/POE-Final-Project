@@ -17,6 +17,7 @@ socket.on('connect', function() {
 // get reference to all plots
 let plotElements = setUpAllPlots();
 var cnt = 0;
+var frame = 50;
 socket.on( 'my response', function( msg ) {
     console.log( typeof msg )
     let dataArray = msg.toString().split(',');
@@ -27,11 +28,11 @@ socket.on( 'my response', function( msg ) {
     console.log(X_accel)
     Plotly.extendTraces(plotElements['X_acceleration'],{ y:[[X_accel]]}, [0]);
     // scroll graph
-    // Plotly.relayout(plotElements['X_acceleration'],{
-    //     xaxis: {
-    //         range: [cnt-50,cnt]
-    //     }
-    // });
+    Plotly.relayout(plotElements['X_acceleration'],{
+        xaxis: {
+            range: [cnt-frame,cnt]
+        }
+    });
 
     $( 'div.message_holder' ).append( '<div>'+msg+'</div>' )
     
