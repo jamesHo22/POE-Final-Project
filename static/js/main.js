@@ -35,6 +35,7 @@ socket.on( 'my response', function( msg ) {
             }
         });
     }
+    cnt++;
 
     $( 'div.message_holder' ).append( '<div>'+msg+'</div>' )
     
