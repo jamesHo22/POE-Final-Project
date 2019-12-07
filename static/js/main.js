@@ -14,9 +14,14 @@ socket.on('connect', function() {
     
     }) 
 });
-
+// get reference to all plots
+let plotElements = setUpAllPlots();
 socket.on( 'my response', function( msg ) {
     console.log( typeof msg )
+    let dataArray = msg.split(',');
+    // PLot the X acceleration
+    let X_accel = dataArray[1];
+    Plotly.extendTraces(plotElements['X_acceleration'],{ y:[X_accel]}, [0]);
     $( 'div.message_holder' ).append( '<div>'+msg+'</div>' )
     
     if( typeof msg.user_name !== 'undefined' ) {
