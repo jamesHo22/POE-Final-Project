@@ -27,7 +27,7 @@ socket.on( 'my response', function( msg ) {
     X_accel = Number(dataArray[1]);
     console.log(typeof X_accel)
     console.log(X_accel)
-    Plotly.extendTraces(plotElements['X_acceleration'],{ y:[[X_accel]], x:[[time]]}, [0]);
+    Plotly.extendTraces(plotElements['X_acceleration'],{x:[[time]], y:[[X_accel]]}, [0]);
     // scroll graph
     if(cnt > 50) {
         Plotly.relayout(plotElements['X_acceleration'],{
