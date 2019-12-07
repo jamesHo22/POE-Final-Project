@@ -23,6 +23,8 @@ socket.on( 'my response', function( msg ) {
     console.log(dataArray);
     // PLot the X acceleration
     X_accel = parseFloat(dataArray[1]);
+    console.log(typeof X_accel)
+    console.log(X_accel)
     Plotly.extendTraces(plotElements['X_acceleration'],{ y:[[X_accel]]}, [0]);
     // scroll graph
     Plotly.relayout(plotElements['X_acceleration'],{
