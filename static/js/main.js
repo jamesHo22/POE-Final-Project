@@ -23,7 +23,7 @@ socket.on( 'my response', function( msg ) {
     let dataArray = msg.toString().split(',');
     console.log(dataArray);
     // PLot the X acceleration
-    time = Number(dataArray[0])
+    time = parseInt(dataArray[0])
     X_accel = Number(dataArray[1]);
     console.log(typeof X_accel)
     console.log(X_accel)
