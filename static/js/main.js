@@ -16,7 +16,7 @@ socket.on('connect', function() {
 });
 
 socket.on( 'my response', function( msg ) {
-    console.log( msg )
+    console.log( typeof msg )
     $( 'div.message_holder' ).append( '<div>'+msg+'</div>' )
     
     if( typeof msg.user_name !== 'undefined' ) {
