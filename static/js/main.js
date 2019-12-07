@@ -23,14 +23,55 @@ socket.on( 'my response', function( msg ) {
     let dataArray = msg.toString().split(',');
     console.log(dataArray);
     // PLot the X acceleration
-    time = parseInt(dataArray[0])
     X_accel = Number(dataArray[1]);
+    Y_accel = Number(dataArray[2]);
+    Z_accel = Number(dataArray[3]);
+
+    X_rot = Number(dataArray[4]);
+    Y_rot = Number(dataArray[5]);
+    Z_rot = Number(dataArray[6]);
     console.log(typeof X_accel)
     console.log(X_accel)
     Plotly.extendTraces(plotElements['X_acceleration'],{y:[[X_accel]]}, [0]);
+    Plotly.extendTraces(plotElements['Y_acceleration'],{y:[[Y_accel]]}, [0]);
+    Plotly.extendTraces(plotElements['Z_acceleration'],{y:[[Z_accel]]}, [0]);
+
+    Plotly.extendTraces(plotElements['X_rot'],{y:[[X_rot]]}, [0]);
+    Plotly.extendTraces(plotElements['Y_rot'],{y:[[Y_rot]]}, [0]);
+    Plotly.extendTraces(plotElements['Z_rot'],{y:[[Z_rot]]}, [0]);
     // scroll graph
     if(cnt > 50) {
         Plotly.relayout(plotElements['X_acceleration'],{
+            xaxis: {
+                range: [cnt-50,cnt]
+            }
+        });
+
+        Plotly.relayout(plotElements['Y_acceleration'],{
+            xaxis: {
+                range: [cnt-50,cnt]
+            }
+        });
+
+        Plotly.relayout(plotElements['Z_acceleration'],{
+            xaxis: {
+                range: [cnt-50,cnt]
+            }
+        });
+
+        Plotly.relayout(plotElements['X_rot'],{
+            xaxis: {
+                range: [cnt-50,cnt]
+            }
+        });
+
+        Plotly.relayout(plotElements['Y_rot'],{
+            xaxis: {
+                range: [cnt-50,cnt]
+            }
+        });
+
+        Plotly.relayout(plotElements['Z_rot'],{
             xaxis: {
                 range: [cnt-50,cnt]
             }
