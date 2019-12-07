@@ -16,12 +16,21 @@ socket.on('connect', function() {
 });
 // get reference to all plots
 let plotElements = setUpAllPlots();
+var cnt = 0;
+let window = 50;
 socket.on( 'my response', function( msg ) {
     console.log( typeof msg )
     let dataArray = msg.split(',');
     // PLot the X acceleration
     let X_accel = dataArray[1];
     Plotly.extendTraces(plotElements['X_acceleration'],{ y:[X_accel]}, [0]);
+    // scroll graph
+    Plotly.relayout(plotElements['X_acceleration'],{
+        xaxis: {
+            range: [cnt-window,cnt]
+        }
+    });
+
     $( 'div.message_holder' ).append( '<div>'+msg+'</div>' )
     
     if( typeof msg.user_name !== 'undefined' ) {
@@ -98,55 +107,55 @@ function initPlot(elementId, plotName) {
 //     Plotly.extendTraces(plotElements['X_acceleration'], { y: [[getData()]] }, [0])
 // }, 200);
 
-var cnt = 0;
+// var cnt = 0;
 
-setInterval(function(){
-    // This test function populates the plots with random data
-    // Acceleration
-    Plotly.extendTraces(plotElements['X_acceleration'],{ y:[[getData()]]}, [0]);
-    Plotly.extendTraces(plotElements['Y_acceleration'],{ y:[[getData()]]}, [0]);
-    Plotly.extendTraces(plotElements['Z_acceleration'],{ y:[[getData()]]}, [0]);
-    // Angular velocity
-    Plotly.extendTraces(plotElements['X_rot'],{ y:[[getData()]]}, [0]);
-    Plotly.extendTraces(plotElements['Y_rot'],{ y:[[getData()]]}, [0]);
-    Plotly.extendTraces(plotElements['Z_rot'],{ y:[[getData()]]}, [0]);
-    cnt++;
+// setInterval(function(){
+//     // This test function populates the plots with random data
+//     // Acceleration
+//     Plotly.extendTraces(plotElements['X_acceleration'],{ y:[[getData()]]}, [0]);
+//     Plotly.extendTraces(plotElements['Y_acceleration'],{ y:[[getData()]]}, [0]);
+//     Plotly.extendTraces(plotElements['Z_acceleration'],{ y:[[getData()]]}, [0]);
+//     // Angular velocity
+//     Plotly.extendTraces(plotElements['X_rot'],{ y:[[getData()]]}, [0]);
+//     Plotly.extendTraces(plotElements['Y_rot'],{ y:[[getData()]]}, [0]);
+//     Plotly.extendTraces(plotElements['Z_rot'],{ y:[[getData()]]}, [0]);
+//     cnt++;
 
-    let window = 50
+//     // let window = 50
     
-    if(cnt > window) {
-        // code for chart 'sliding' here
-        Plotly.relayout(plotElements['X_acceleration'],{
-            xaxis: {
-                range: [cnt-window,cnt]
-            }
-        });
-        Plotly.relayout(plotElements['Y_acceleration'],{
-            xaxis: {
-                range: [cnt-window,cnt]
-            }
-        });
-        Plotly.relayout(plotElements['Z_acceleration'],{
-            xaxis: {
-                range: [cnt-window,cnt]
-            }
-        });
+//     if(cnt > window) {
+//         // code for chart 'sliding' here
+//         Plotly.relayout(plotElements['X_acceleration'],{
+//             xaxis: {
+//                 range: [cnt-window,cnt]
+//             }
+//         });
+//         Plotly.relayout(plotElements['Y_acceleration'],{
+//             xaxis: {
+//                 range: [cnt-window,cnt]
+//             }
+//         });
+//         Plotly.relayout(plotElements['Z_acceleration'],{
+//             xaxis: {
+//                 range: [cnt-window,cnt]
+//             }
+//         });
 
-        Plotly.relayout(plotElements['X_rot'],{
-            xaxis: {
-                range: [cnt-window,cnt]
-            }
-        });
-        Plotly.relayout(plotElements['Y_rot'],{
-            xaxis: {
-                range: [cnt-window,cnt]
-            }
-        });
-        Plotly.relayout(plotElements['Z_rot'],{
-            xaxis: {
-                range: [cnt-window,cnt]
-            }
-        });
-    }
+//         Plotly.relayout(plotElements['X_rot'],{
+//             xaxis: {
+//                 range: [cnt-window,cnt]
+//             }
+//         });
+//         Plotly.relayout(plotElements['Y_rot'],{
+//             xaxis: {
+//                 range: [cnt-window,cnt]
+//             }
+//         });
+//         Plotly.relayout(plotElements['Z_rot'],{
+//             xaxis: {
+//                 range: [cnt-window,cnt]
+//             }
+//         });
+//     }
 
-}, 15);
+// }, 15);
