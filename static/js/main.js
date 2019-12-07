@@ -22,7 +22,7 @@ socket.on( 'my response', function( msg ) {
     let dataArray = msg.toString().split(',');
     console.log(dataArray);
     // PLot the X acceleration
-    X_accel = parseInt(dataArray[1]);
+    X_accel = Number(dataArray[1]);
     console.log(typeof X_accel)
     console.log(X_accel)
     Plotly.extendTraces(plotElements['X_acceleration'],{ y:[[X_accel]]}, [0]);
