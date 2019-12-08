@@ -14,10 +14,11 @@ socket.on('connect', function() {
     
     }) 
 });
-setUpAllPlots();
+
 // get reference to all plots
-let plotElements = setUpAllPlots();
+// let plotElements = setUpAllPlots();
 var cnt = 0;
+firstTime = 0;
 // var frame = 50;
 socket.on( 'my response', function( msg ) {
     console.log( typeof msg )
@@ -25,6 +26,13 @@ socket.on( 'my response', function( msg ) {
     console.log(dataArray);
     // PLot the X acceleration
     time = Number(dataArray[0]);
+
+    // initialize the graphs on the first datapoint
+    if(firstTime == 0) {
+        setUpAllPlots(time);
+        firstTime++
+    }
+
     X_accel = Number(dataArray[1]);
     Y_accel = Number(dataArray[2]);
     Z_accel = Number(dataArray[3]);
@@ -40,7 +48,14 @@ socket.on( 'my response', function( msg ) {
         y: [[X_accel], [Y_accel], [Z_accel], [X_rot], [Y_rot], [Z_rot]]
       }
     Plotly.extendTraces('subplots', update, [0,1, 2, 3, 4, 5])
-
+    if(cnt > 50) {
+        Plotly.relayout('subplots',{
+            xaxis: {
+                range: [cnt-50,cnt]
+            }
+        });
+    }
+    cnt++;
     // Old method of having many plots
 
     // Plotly.extendTraces(plotElements['X_acceleration'],{y:[[X_accel]]}, [0]);
@@ -106,7 +121,7 @@ function getData() {
     return Math.random();
 }
 
-function setUpAllPlots() {
+function setUpAllPlots(times) {
     /**
      * initalizes all the plots on the page and returns 
      * a dictionary of graph Elements
@@ -124,13 +139,13 @@ function setUpAllPlots() {
     // return plotElement;
 
     var trace1 = {
-        x: [0],
+        x: [time],
         y: [0],
         type: 'scatter'
     };
       
     var trace2 = {
-        x: [0],
+        x: [time],
         y: [0],
         xaxis: 'x2',
         yaxis: 'y2',
@@ -138,7 +153,7 @@ function setUpAllPlots() {
     };
       
     var trace3 = {
-        x: [0],
+        x: [time],
         y: [0],
         xaxis: 'x3',
         yaxis: 'y3',
@@ -146,7 +161,7 @@ function setUpAllPlots() {
     };
 
     var trace4 = {
-        x: [0],
+        x: [time],
         y: [0],
         xaxis: 'x4',
         yaxis: 'y4',
@@ -154,7 +169,7 @@ function setUpAllPlots() {
     };
       
     var trace5 = {
-        x: [0],
+        x: [time],
         y: [0],
         xaxis: 'x5',
         yaxis: 'y5',
@@ -162,7 +177,7 @@ function setUpAllPlots() {
     };
       
     var trace6 = {
-        x: [0],
+        x: [time],
         y: [0],
         xaxis: 'x6',
         yaxis: 'y6',
