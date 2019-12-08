@@ -48,12 +48,14 @@ socket.on( 'my response', function( msg ) {
         y: [[X_accel], [Y_accel], [Z_accel], [X_rot], [Y_rot], [Z_rot]]
       }
     Plotly.extendTraces('subplots', update, [0,1, 2, 3, 4, 5])
+    
+    var updateLayout = {
+        xaxis: {
+            range: [cnt-50,cnt]
+        }
+    }
     if(cnt > 50) {
-        Plotly.relayout('subplots',{
-            xaxis: {
-                range: [cnt-50,cnt]
-            }
-        });
+        Plotly.relayout('subplots', [updateLayout,updateLayout,updateLayout,updateLayout,updateLayout,updateLayout]);
     }
     cnt++;
     // Old method of having many plots
@@ -198,7 +200,7 @@ function setUpAllPlots(times) {
         rows: 3,
         columns: 2,
         pattern: 'independent',
-        roworder: 'bottom to top'}
+        roworder: 'top to bottom'}
     };
       
     Plotly.newPlot('subplots', data, layout);
