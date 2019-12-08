@@ -49,63 +49,10 @@ socket.on( 'my response', function( msg ) {
       }
     Plotly.extendTraces('subplots', update, [0,1, 2, 3, 4, 5])
     
-    var updateLayout = {
-        xaxis: {
-            range: [cnt-50,cnt]
-        }
-    }
     if(cnt > 50) {
-        Plotly.relayout('subplots', [updateLayout,updateLayout,updateLayout,updateLayout,updateLayout,updateLayout]);
+        Plotly.relayout('subplots', updateLayout);
     }
     cnt++;
-    // Old method of having many plots
-
-    // Plotly.extendTraces(plotElements['X_acceleration'],{y:[[X_accel]]}, [0]);
-    // Plotly.extendTraces(plotElements['Y_acceleration'],{y:[[Y_accel]]}, [0]);
-    // Plotly.extendTraces(plotElements['Z_acceleration'],{y:[[Z_accel]]}, [0]);
-
-    // Plotly.extendTraces(plotElements['X_rot'],{y:[[X_rot]]}, [0]);
-    // Plotly.extendTraces(plotElements['Y_rot'],{y:[[Y_rot]]}, [0]);
-    // Plotly.extendTraces(plotElements['Z_rot'],{y:[[Z_rot]]}, [0]);
-    // // scroll graph
-    // if(cnt > 50) {
-    //     Plotly.relayout(plotElements['X_acceleration'],{
-    //         xaxis: {
-    //             range: [cnt-50,cnt]
-    //         }
-    //     });
-
-    //     Plotly.relayout(plotElements['Y_acceleration'],{
-    //         xaxis: {
-    //             range: [cnt-50,cnt]
-    //         }
-    //     });
-
-    //     Plotly.relayout(plotElements['Z_acceleration'],{
-    //         xaxis: {
-    //             range: [cnt-50,cnt]
-    //         }
-    //     });
-
-    //     Plotly.relayout(plotElements['X_rot'],{
-    //         xaxis: {
-    //             range: [cnt-50,cnt]
-    //         }
-    //     });
-
-    //     Plotly.relayout(plotElements['Y_rot'],{
-    //         xaxis: {
-    //             range: [cnt-50,cnt]
-    //         }
-    //     });
-
-    //     Plotly.relayout(plotElements['Z_rot'],{
-    //         xaxis: {
-    //             range: [cnt-50,cnt]
-    //         }
-    //     });
-    // }
-    // cnt++;
 
     $( 'div.message_holder' ).append( '<div>'+msg+'</div>' )
     
@@ -142,6 +89,7 @@ function setUpAllPlots(times) {
 
     var trace1 = {
         title: "X Acceleration (m/s^2)",
+        name: "X Acceleration (m/s^2)",
         x: [time],
         y: [0],
         type: 'scatter'
@@ -149,6 +97,7 @@ function setUpAllPlots(times) {
       
     var trace2 = {
         title: "Y Acceleration (m/s^2)",
+        name: "Y Acceleration (m/s^2)",
         x: [time],
         y: [0],
         xaxis: 'x2',
@@ -158,6 +107,7 @@ function setUpAllPlots(times) {
       
     var trace3 = {
         title: "Z Acceleration (m/s^2)",
+        name: "Z Acceleration (m/s^2)",
         x: [time],
         y: [0],
         xaxis: 'x3',
@@ -167,6 +117,7 @@ function setUpAllPlots(times) {
 
     var trace4 = {
         title: "X angular velocity (rad/s)",
+        name: "X angular velocity (rad/s)",
         x: [time],
         y: [0],
         xaxis: 'x4',
@@ -176,6 +127,7 @@ function setUpAllPlots(times) {
       
     var trace5 = {
         title: "Y angular velocity (rad/s)",
+        name: "Y angular velocity (rad/s)",
         x: [time],
         y: [0],
         xaxis: 'x5',
@@ -185,6 +137,7 @@ function setUpAllPlots(times) {
       
     var trace6 = {
         title: "Z angular velocity (rad/s)",
+        name: "Z angular velocity (rad/s)",
         x: [time],
         y: [0],
         xaxis: 'x6',
@@ -196,11 +149,12 @@ function setUpAllPlots(times) {
     var data = [trace1, trace2, trace3, trace4, trace5, trace6];
     
     var layout = {
-    grid: {
-        rows: 3,
-        columns: 2,
-        pattern: 'independent',
-        roworder: 'top to bottom'}
+        title: 'Acceleration and angular velcocity',
+        grid: {
+            rows: 3,
+            columns: 2,
+            pattern: 'independent',
+            roworder: 'top to bottom'}
     };
       
     Plotly.newPlot('subplots', data, layout);
