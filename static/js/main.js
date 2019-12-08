@@ -139,12 +139,14 @@ function setUpAllPlots(times) {
     // return plotElement;
 
     var trace1 = {
+        name: "X Acceleration (m/s^2)",
         x: [time],
         y: [0],
         type: 'scatter'
     };
       
     var trace2 = {
+        name: "Y Acceleration (m/s^2)",
         x: [time],
         y: [0],
         xaxis: 'x2',
@@ -153,6 +155,7 @@ function setUpAllPlots(times) {
     };
       
     var trace3 = {
+        name: "Z Acceleration (m/s^2)",
         x: [time],
         y: [0],
         xaxis: 'x3',
@@ -161,6 +164,7 @@ function setUpAllPlots(times) {
     };
 
     var trace4 = {
+        name: "X angular velocity (rad/s)",
         x: [time],
         y: [0],
         xaxis: 'x4',
@@ -169,6 +173,7 @@ function setUpAllPlots(times) {
     };
       
     var trace5 = {
+        name: "Y angular velocity (rad/s)",
         x: [time],
         y: [0],
         xaxis: 'x5',
@@ -177,6 +182,7 @@ function setUpAllPlots(times) {
     };
       
     var trace6 = {
+        name: "Z angular velocity (rad/s)",
         x: [time],
         y: [0],
         xaxis: 'x6',
