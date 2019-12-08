@@ -36,10 +36,10 @@ socket.on( 'my response', function( msg ) {
     console.log(X_accel)
 
     var update = {
-        // x: [[time], [time], [time]],
-        y: [[X_accel], [Y_accel], [Z_accel]]
+        x: [[time], [time], [time], [time], [time], [time]],
+        y: [[X_accel], [Y_accel], [Z_accel], [X_rot], [Y_rot], [Z_rot]]
       }
-    Plotly.extendTraces('subplots', update, [0,1, 2])
+    Plotly.extendTraces('subplots', update, [0,1, 2, 3, 4, 5])
 
     // Old method of having many plots
 
@@ -127,35 +127,60 @@ function setUpAllPlots() {
         x: [0],
         y: [0],
         type: 'scatter'
-      };
+    };
       
-      var trace2 = {
+    var trace2 = {
         x: [0],
         y: [0],
         xaxis: 'x2',
         yaxis: 'y2',
         type: 'scatter'
-      };
+    };
       
-      var trace3 = {
+    var trace3 = {
         x: [0],
         y: [0],
         xaxis: 'x3',
         yaxis: 'y3',
         type: 'scatter'
-      };
+    };
+
+    var trace4 = {
+        x: [0],
+        y: [0],
+        xaxis: 'x4',
+        yaxis: 'y4',
+        type: 'scatter'
+    };
       
-      var data = [trace1, trace2, trace3];
+    var trace5 = {
+        x: [0],
+        y: [0],
+        xaxis: 'x5',
+        yaxis: 'y5',
+        type: 'scatter'
+    };
       
-      var layout = {
-      grid: {
-          rows: 3,
-          columns: 1,
-          pattern: 'independent',
-          roworder: 'bottom to top'}
-      };
+    var trace6 = {
+        x: [0],
+        y: [0],
+        xaxis: 'x6',
+        yaxis: 'y6',
+        type: 'scatter'
+    };
+
+    
+    var data = [trace1, trace2, trace3, trace4, trace5, trace6];
+    
+    var layout = {
+    grid: {
+        rows: 3,
+        columns: 2,
+        pattern: 'independent',
+        roworder: 'bottom to top'}
+    };
       
-      Plotly.newPlot('subplots', data, layout);
+    Plotly.newPlot('subplots', data, layout);
 }
 
 // var interval = setInterval(function() {
