@@ -49,17 +49,6 @@ socket.on( 'my response', function( msg ) {
       }
     Plotly.extendTraces('subplots', update, [0,1, 2, 3, 4, 5])
     
-    var updateLayout = {
-        xaxis: {
-            range: [cnt-50,cnt]
-        }
-    }
-
-    if(cnt > 50) {
-        Plotly.relayout('subplots', updateLayout);
-    }
-    cnt++;
-
     $( 'div.message_holder' ).append( '<div>'+msg+'</div>' )
     
     if( typeof msg.user_name !== 'undefined' ) {
