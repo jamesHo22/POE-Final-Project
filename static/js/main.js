@@ -45,7 +45,7 @@ socket.on( 'my response', function( msg ) {
 
     var update = {
         x: [[time], [time], [time], [time], [time], [time]],
-        y: [[X_accel], [Y_accel], [Z_accel], [X_rot], [Y_rot], [Z_rot]]
+        y: [[X_accel], [X_rot], [Y_accel], [Y_rot], [Z_accel], [Z_rot]]
       }
     Plotly.extendTraces('subplots', update, [0,1, 2, 3, 4, 5])
     
