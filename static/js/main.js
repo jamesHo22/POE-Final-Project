@@ -141,7 +141,7 @@ function setUpAllPlots(times) {
     };
 
     
-    var data = [trace1, trace2, trace3, trace4, trace5, trace6];
+    var data = [trace1, trace4, trace2, trace5, trace3, trace6];
     
     var layout = {
         title: 'Acceleration and angular velcocity',
