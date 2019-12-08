@@ -146,8 +146,8 @@ function setUpAllPlots(times) {
     var layout = {
         title: 'Acceleration and angular velcocity',
         grid: {
-            rows: 3,
-            columns: 2,
+            rows: 2,
+            columns: 3,
             pattern: 'independent',
             roworder: 'top to bottom'}
     };
