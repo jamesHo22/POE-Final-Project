@@ -1,5 +1,5 @@
 
-let socket = io.connect('http://' + document.domain + ':' + location.port);
+let socket = io.connect('https://' + document.domain + ':' + location.port);
 console.log('https://' + document.domain + ':' + location.port)
 socket.on('connect', function() {
     socket.emit('my event', {data: 'User connected!'});
@@ -14,6 +14,7 @@ socket.on('connect', function() {
     
     }) 
 });
+setUpAllPlots();
 // get reference to all plots
 let plotElements = setUpAllPlots();
 var cnt = 0;
@@ -23,6 +24,7 @@ socket.on( 'my response', function( msg ) {
     let dataArray = msg.toString().split(',');
     console.log(dataArray);
     // PLot the X acceleration
+    time = Number(dataArray[0]);
     X_accel = Number(dataArray[1]);
     Y_accel = Number(dataArray[2]);
     Z_accel = Number(dataArray[3]);
@@ -32,52 +34,61 @@ socket.on( 'my response', function( msg ) {
     Z_rot = Number(dataArray[6]);
     console.log(typeof X_accel)
     console.log(X_accel)
-    Plotly.extendTraces(plotElements['X_acceleration'],{y:[[X_accel]]}, [0]);
-    Plotly.extendTraces(plotElements['Y_acceleration'],{y:[[Y_accel]]}, [0]);
-    Plotly.extendTraces(plotElements['Z_acceleration'],{y:[[Z_accel]]}, [0]);
 
-    Plotly.extendTraces(plotElements['X_rot'],{y:[[X_rot]]}, [0]);
-    Plotly.extendTraces(plotElements['Y_rot'],{y:[[Y_rot]]}, [0]);
-    Plotly.extendTraces(plotElements['Z_rot'],{y:[[Z_rot]]}, [0]);
-    // scroll graph
-    if(cnt > 50) {
-        Plotly.relayout(plotElements['X_acceleration'],{
-            xaxis: {
-                range: [cnt-50,cnt]
-            }
-        });
+    var update = {
+        // x: [[time], [time], [time]],
+        y: [[X_accel], [Y_accel], [Z_accel]]
+      }
+    Plotly.extendTraces('subplots', update, [0,1, 2])
 
-        Plotly.relayout(plotElements['Y_acceleration'],{
-            xaxis: {
-                range: [cnt-50,cnt]
-            }
-        });
+    // Old method of having many plots
 
-        Plotly.relayout(plotElements['Z_acceleration'],{
-            xaxis: {
-                range: [cnt-50,cnt]
-            }
-        });
+    // Plotly.extendTraces(plotElements['X_acceleration'],{y:[[X_accel]]}, [0]);
+    // Plotly.extendTraces(plotElements['Y_acceleration'],{y:[[Y_accel]]}, [0]);
+    // Plotly.extendTraces(plotElements['Z_acceleration'],{y:[[Z_accel]]}, [0]);
 
-        Plotly.relayout(plotElements['X_rot'],{
-            xaxis: {
-                range: [cnt-50,cnt]
-            }
-        });
+    // Plotly.extendTraces(plotElements['X_rot'],{y:[[X_rot]]}, [0]);
+    // Plotly.extendTraces(plotElements['Y_rot'],{y:[[Y_rot]]}, [0]);
+    // Plotly.extendTraces(plotElements['Z_rot'],{y:[[Z_rot]]}, [0]);
+    // // scroll graph
+    // if(cnt > 50) {
+    //     Plotly.relayout(plotElements['X_acceleration'],{
+    //         xaxis: {
+    //             range: [cnt-50,cnt]
+    //         }
+    //     });
 
-        Plotly.relayout(plotElements['Y_rot'],{
-            xaxis: {
-                range: [cnt-50,cnt]
-            }
-        });
+    //     Plotly.relayout(plotElements['Y_acceleration'],{
+    //         xaxis: {
+    //             range: [cnt-50,cnt]
+    //         }
+    //     });
 
-        Plotly.relayout(plotElements['Z_rot'],{
-            xaxis: {
-                range: [cnt-50,cnt]
-            }
-        });
-    }
-    cnt++;
+    //     Plotly.relayout(plotElements['Z_acceleration'],{
+    //         xaxis: {
+    //             range: [cnt-50,cnt]
+    //         }
+    //     });
+
+    //     Plotly.relayout(plotElements['X_rot'],{
+    //         xaxis: {
+    //             range: [cnt-50,cnt]
+    //         }
+    //     });
+
+    //     Plotly.relayout(plotElements['Y_rot'],{
+    //         xaxis: {
+    //             range: [cnt-50,cnt]
+    //         }
+    //     });
+
+    //     Plotly.relayout(plotElements['Z_rot'],{
+    //         xaxis: {
+    //             range: [cnt-50,cnt]
+    //         }
+    //     });
+    // }
+    // cnt++;
 
     $( 'div.message_holder' ).append( '<div>'+msg+'</div>' )
     
@@ -101,17 +112,59 @@ function setUpAllPlots() {
      * a dictionary of graph Elements
      * @returns {Object} a map of each plotElement so that plotly can append data to them
      */
-    let plotElement = {}
-    let cart = [];
-    $.each($('#all_plots div'), function(index){
-        let elementId = $(this).attr('id');
-        let plotName = $(this).attr('title');
-        plotElement[elementId] = initPlot(elementId, plotName);
-        cart.push(plotElement);
-    });
-    console.log(plotElement);
-    return plotElement;
+    // let plotElement = {}
+    // let cart = [];
+    // $.each($('#all_plots div'), function(index){
+    //     let elementId = $(this).attr('id');
+    //     let plotName = $(this).attr('title');
+    //     plotElement[elementId] = initPlot(elementId, plotName);
+    //     cart.push(plotElement);
+    // });
+    // console.log(plotElement);
+    // return plotElement;
+
+    var trace1 = {
+        x: [0],
+        y: [0],
+        type: 'scatter'
+      };
+      
+      var trace2 = {
+        x: [0],
+        y: [0],
+        xaxis: 'x2',
+        yaxis: 'y2',
+        type: 'scatter'
+      };
+      
+      var trace3 = {
+        x: [0],
+        y: [0],
+        xaxis: 'x3',
+        yaxis: 'y3',
+        type: 'scatter'
+      };
+      
+      var data = [trace1, trace2, trace3];
+      
+      var layout = {
+      grid: {
+          rows: 3,
+          columns: 1,
+          pattern: 'independent',
+          roworder: 'bottom to top'}
+      };
+      
+      Plotly.newPlot('subplots', data, layout);
 }
+
+// var interval = setInterval(function() {
+//     var update = {
+//       x: [[getData()], [getData()], [getData()]],
+//       y: [[getData()], [getData()], [getData()]]
+//     }
+//     Plotly.extendTraces('subplots', update, [0,1, 2])
+//   }, 500);
 
 function initPlot(elementId, plotName) {
     /**
