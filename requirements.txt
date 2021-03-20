@@ -6,7 +6,7 @@ Flask-SocketIO==4.2.1
 greenlet==0.4.15
 gunicorn==19.9.0
 itsdangerous==0.24
-Jinja2==2.8
+Jinja2==2.11.3
 MarkupSafe==0.23
 monotonic==1.5
 plotly==4.3.0
